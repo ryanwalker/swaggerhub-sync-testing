@@ -1,0 +1,236 @@
+openapi: 3.0.0
+info:
+  title: PrePay API
+  description: Pre-Pay Accounts API
+  version: 0.1.0
+servers:
+- url: https://prepay-api.kubra.io/v1
+  description: KUBRA PRE-PAY ACCOUNTS API
+- url: http://localhost:8080/v1
+  description: Development PRE-PAY API
+tags:
+- name: accounts
+  description: The consumer's account. Client CIS is system of record. PrePay stores
+    minimal account info.
+paths:
+  /accounts:
+    get:
+      tags:
+      - accounts
+      summary: List accounts
+      description: Get a list of accounts
+      operationId: getAccountsList
+      parameters:
+      - name: pageSize
+        in: query
+        description: Size of page to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: pageNumber
+        in: query
+        description: Page number to retrieve
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountList'
+    post:
+      tags:
+      - accounts
+      summary: Register an account
+      description: Register an account
+      operationId: registerAccount
+      requestBody:
+        description: Account request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /accounts/{accountId}:
+    get:
+      tags:
+      - accounts
+      summary: Get an account
+      description: des
+      operationId: getAccountById
+      parameters:
+      - name: accountId
+        in: path
+        description: The account id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: The account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+    put:
+      tags:
+      - accounts
+      summary: Update an account
+      operationId: updateAccountById
+      parameters:
+      - name: accountId
+        in: path
+        description: The account id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        200:
+          description: Account updated, no response body
+        400:
+          description: Bad request
+        404:
+          description: Account was not found and thus cannot be updated
+        409:
+          description: Account has been modified
+    delete:
+      tags:
+      - accounts
+      summary: Delete an account
+      operationId: deleteAccountById
+      parameters:
+      - name: accountId
+        in: path
+        description: The account id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        204:
+          description: Account deleted
+        404:
+          description: Account not found
+components:
+  schemas:
+    Account:
+      required:
+      - accountStatus
+      - serviceAddressLine1
+      - serviceAddressLine2
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        version:
+          type: string
+          description: Use as ETag header when modifying accounts
+          readOnly: true
+        externalAccountId:
+          type: string
+          description: Account Id provided by client
+        creditBalance:
+          type: number
+          format: double
+          readOnly: true
+        paydownBalance:
+          type: number
+          format: double
+          readOnly: true
+        serviceAddressLine1:
+          type: string
+          description: First line of the service address in human readable format.
+            For display purposes only
+          example: 4215 E. Kubra St.
+        serviceAddressLine2:
+          type: string
+          description: Second line of the service address in human readable format.
+            For display purposes only
+          example: Gilbert, AZ 85222
+        accountStatus:
+          $ref: '#/components/schemas/AccountStatus'
+        accountType:
+          type: string
+          example: M-Power Pre-Pay Account
+        userId:
+          type: string
+          description: Id of the user associated with this account
+          example: 123ADE5Z
+    AccountStatus:
+      type: string
+      enum:
+      - CONNECTED
+      - DISCONNECTED
+    AccountList:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    User:
+      required:
+      - familyName
+      - givenName
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        externalUserId:
+          type: string
+          description: Optional user identifier from client system
+          example: 123AAEE
+        givenName:
+          type: string
+          description: Given name of the user associated with this account
+          example: Bob
+        familyName:
+          type: string
+          description: Family name of the user associated with this account
+          example: Builder
