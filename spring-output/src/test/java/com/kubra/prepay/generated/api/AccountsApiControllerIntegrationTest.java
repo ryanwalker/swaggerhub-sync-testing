@@ -38,7 +38,9 @@ public class AccountsApiControllerIntegrationTest {
 
     @Test
     public void getAccountsListTest() throws Exception {
-        ResponseEntity<AccountList> responseEntity = api.getAccountsList();
+        Integer pageSize = 56;
+        Integer pageNumber = 56;
+        ResponseEntity<AccountList> responseEntity = api.getAccountsList(pageSize, pageNumber);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
