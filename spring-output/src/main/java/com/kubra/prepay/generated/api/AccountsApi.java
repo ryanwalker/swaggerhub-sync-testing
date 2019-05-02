@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:50:43.197Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:52:18.337Z[GMT]")
 @Api(value = "accounts", description = "the accounts API")
 public interface AccountsApi {
 
@@ -51,7 +51,7 @@ public interface AccountsApi {
     @RequestMapping(value = "/accounts",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<AccountList> getAccountsList(@ApiParam(value = "Size of page to return") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Page number to retrieve") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber);
+    ResponseEntity<AccountList> getAccountsList();
 
 
     @ApiOperation(value = "Register an account", nickname = "registerAccount", notes = "Register an account", response = Account.class, tags={ "accounts", })

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:50:43.197Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:52:18.337Z[GMT]")
 @Controller
 public class AccountsApiController implements AccountsApi {
 
@@ -48,7 +48,7 @@ public class AccountsApiController implements AccountsApi {
         return new ResponseEntity<Account>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<AccountList> getAccountsList(@ApiParam(value = "Size of page to return") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Page number to retrieve") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
+    public ResponseEntity<AccountList> getAccountsList() {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<AccountList>(HttpStatus.NOT_IMPLEMENTED);
     }

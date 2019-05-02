@@ -1,6 +1,6 @@
 package com.kubra.prepay.generated.api;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:50:43.197Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-02T23:52:18.337Z[GMT]")
 public class ApiException extends Exception{
     private int code;
     public ApiException (int code, String msg) {
